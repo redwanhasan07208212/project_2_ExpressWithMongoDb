@@ -59,7 +59,11 @@ const studentSchema = new Schema<Student>({
     required: true,
   },
   name: userNameSchema,
-  gender: ['male', 'female'],
+  gender: {
+    type: String,
+    enum: ['male', 'female'],
+    required: true,
+  },
   email: {
     type: String,
     required: true,
@@ -73,7 +77,11 @@ const studentSchema = new Schema<Student>({
     type: String,
     required: true,
   },
-  bloodGroup: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'],
+  bloodGroup: {
+    type: String,
+    enum: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'],
+    required: true,
+  },
   presentAddress: {
     type: String,
     required: true,
@@ -85,7 +93,11 @@ const studentSchema = new Schema<Student>({
   gurdian: gurdianSchema,
   localGurdian: localGurdianSchema,
   profileImg: String,
-  isActive: ['active', 'disabled'],
+  isActive: {
+    type: String,
+    enum: ['active', 'disabled'],
+    default: 'active',
+  },
 });
 
 export const StudentModel = model<Student>('Student', studentSchema);
