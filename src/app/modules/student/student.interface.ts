@@ -1,35 +1,60 @@
-export type Gurdian = {
-  fatherName: string;
-  fatherOccupation: string;
-  fatherContactNumber: string;
-  motherName: string;
-  motherOccupation: string;
-  motherContactNumber: string;
-};
-export type UserName = {
+import { Model, Types } from 'mongoose';
+
+export type TUserName = {
   firstName: string;
-  middleName?: string;
+  middleName: string;
   lastName: string;
 };
-export type LocalGurdian = {
+
+export type TGuardian = {
+  fatherName: string;
+  fatherOccupation: string;
+  fatherContactNo: string;
+  motherName: string;
+  motherOccupation: string;
+  motherContactNo: string;
+};
+
+export type TLocalGuardian = {
   name: string;
   occupation: string;
-  contactNumber: string;
+  contactNo: string;
   address: string;
 };
-export type Student = {
+
+export type TStudent = {
   id: string;
-  name: UserName;
-  gender: 'male' | 'female';
+  user: Types.ObjectId;
+  password: string;
+  name: TUserName;
+  gender: 'male' | 'female' | 'other';
+  dateOfBirth?: string;
   email: string;
-  contactNumber: string;
-  dateofBirth: string;
-  emergencyContactNumber: string;
-  bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'O+' | 'O-' | 'AB+' | 'AB-';
+  contactNo: string;
+  emergencyContactNo: string;
+  bloogGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
   presentAddress: string;
   permanentAddress: string;
-  gurdian: Gurdian;
-  localGurdian: LocalGurdian;
+  guardian: TGuardian;
+  localGuardian: TLocalGuardian;
   profileImg?: string;
-  isActive: 'active' | 'disabled';
+  isDeleted: boolean;
 };
+
+//for creating static
+
+export interface StudentModel extends Model<TStudent> {
+  isUserExists(id: string): Promise<TStudent | null>;
+}
+
+// for creating instance
+
+// export interface StudentMethods {
+//   isUserExists(id: string): Promise<TStudent | null>;
+// }
+
+// export type StudentModel = Model<
+//   TStudent,
+//   Record<string, never>,
+//   StudentMethods
+// >;
