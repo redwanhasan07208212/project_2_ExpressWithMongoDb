@@ -1,4 +1,5 @@
 import {
+  TacademicSemesterCodeNameMapper,
   TcodeName,
   TMonths,
   TsemesterName,
@@ -20,3 +21,9 @@ export const Months: TMonths[] = [
 ];
 export const semesterName: TsemesterName[] = ['Autumn', 'Summer', 'Fall'];
 export const codeName: TcodeName[] = ['01', '02', '03'];
+
+export const academicSemesterCodeNameMapper: TacademicSemesterCodeNameMapper = {
+  Autumn: '01',
+  Summer: '02',
+  Fall: '03',
+};
