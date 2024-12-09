@@ -19,7 +19,7 @@ const getAllFromAcademicFaculty = catchAsync(async (req, res, next) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Faculty Created Successfully',
+    message: 'Get All Academic Faculty Successfully',
     data: result,
   });
 });
@@ -30,7 +30,7 @@ const getSingleFromAcademicFaculty = catchAsync(async (req, res, next) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Faculty Created Successfully',
+    message: 'Get Single Academic Faculty Successfully',
     data: result,
   });
 });
