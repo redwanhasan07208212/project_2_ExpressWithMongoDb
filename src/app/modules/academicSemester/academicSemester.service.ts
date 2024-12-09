@@ -7,7 +7,6 @@ const createAcademicSemesterIntodb = async (payload: TAcademicSemester) => {
     throw new Error('Invalid Semester Code');
   }
   const createAcademicSemester = await AcademicSemester.create(payload);
-  console.log(createAcademicSemester);
   return createAcademicSemester;
 };
 const getAllAcademicSemesterIntodb = async () => {
