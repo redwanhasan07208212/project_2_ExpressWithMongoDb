@@ -5,15 +5,15 @@ const createAcademicDepartintoDb = async (payload: TAcademicDepartment) => {
   const result = await AcademicDepartment.create(payload);
   return result;
 };
-const getAllAcademicDepartment = async () => {
+const getAllAcademicDepartmentintoDb = async () => {
   const result = await AcademicDepartment.find();
   return result;
 };
-const getSingleAcademicDepartment = async (id: string) => {
+const getSingleAcademicDepartmentintoDb = async (id: string) => {
   const result = await AcademicDepartment.findById(id);
   return result;
 };
-const updateAcademicDepartment = async (
+const updateAcademicDepartmentintoDb = async (
   id: string,
   payload: Partial<TAcademicDepartment>,
 ) => {
@@ -26,7 +26,7 @@ const updateAcademicDepartment = async (
 };
 export const AcademicDepartmentService = {
   createAcademicDepartintoDb,
-  getAllAcademicDepartment,
-  getSingleAcademicDepartment,
-  updateAcademicDepartment,
+  getAllAcademicDepartmentintoDb,
+  getSingleAcademicDepartmentintoDb,
+  updateAcademicDepartmentintoDb,
 };
