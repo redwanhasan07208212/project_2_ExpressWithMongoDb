@@ -24,9 +24,9 @@ const getallAcademicSemester = catchAsync(async (req, res, next) => {
   });
 });
 const getSingleAcademicSemester = catchAsync(async (req, res, next) => {
-  const { studentId } = req.params;
+  const { semesterId } = req.params;
   const result =await
-    AcademicSemesterService.getSingleAcademicSemesterIntodb(studentId);
+    AcademicSemesterService.getSingleAcademicSemesterIntodb(semesterId);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

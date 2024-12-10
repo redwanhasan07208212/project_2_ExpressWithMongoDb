@@ -44,10 +44,11 @@ export const studentValidationCreateSchema = z.object({
       guardian: guardianSchema,
       localGuardian: localGuardianSchema,
       profileImg: z.string(),
+      admissionSemester: z.string(),
+      academicDepartment: z.string(),
     }),
   }),
 });
-
 export const studentValidation = {
   studentValidationCreateSchema,
 };
