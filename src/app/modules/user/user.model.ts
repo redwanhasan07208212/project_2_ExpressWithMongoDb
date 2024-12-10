@@ -1,8 +1,7 @@
-import { model, Schema } from 'mongoose';
-import { Tuser } from './user.interface';
 import bcrypt from 'bcrypt';
+import { model, Schema } from 'mongoose';
 import config from '../../config';
-
+import { Tuser } from './user.interface';
 
 const userSchema = new Schema<Tuser>(
   {
@@ -56,4 +55,4 @@ userSchema.post('save', function (doc, next) {
   next();
 });
 
-export const User = model<Tuser>('user', userSchema);
+export const User = model<Tuser>('User', userSchema);
