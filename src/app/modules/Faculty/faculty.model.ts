@@ -111,4 +111,10 @@ facultySchema.pre('aggregate', function (next) {
   this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
   next();
 });
+
+//creating a custom static method
+facultySchema.statics.isUserExists = async function (id: string) {
+  const existingUser = await Faculty.findOne({ id });
+  return existingUser;
+};
 export const Faculty = model<TFaculty, FacultyModel>('Faculty', facultySchema);
