@@ -25,7 +25,7 @@ const getSingleFacultyFromDB = async (id: string) => {
   const result = await Faculty.findById(id);
   return result;
 };
-const deleteStudentFromDB = async (id: string) => {
+const deleteFacultyFromDB = async (id: string) => {
   const session = await mongoose.startSession();
   try {
     session.startTransaction();
@@ -59,7 +59,7 @@ const deleteStudentFromDB = async (id: string) => {
   }
 };
 
-const getupdateStudentFromDB = async (
+const getupdateFacultyFromDB = async (
   id: string,
   payload: Partial<TFaculty>,
 ) => {
@@ -82,6 +82,6 @@ const getupdateStudentFromDB = async (
 export const facultyServices = {
   getAllFacultyFromDB,
   getSingleFacultyFromDB,
-  deleteStudentFromDB,
-  getupdateStudentFromDB,
+  deleteFacultyFromDB,
+  getupdateFacultyFromDB,
 };
