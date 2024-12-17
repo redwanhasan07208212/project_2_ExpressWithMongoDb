@@ -1,18 +1,88 @@
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
+import QueryBuilder from '../../builder/queryBuilder';
 import AppError from '../../errors/AppError';
+import studentSerachableFields from './student.constant';
 import { TStudent } from './student.interface';
 import { Student } from './student.model';
 
-const getAllStudentsFromDB = async () => {
-  const result = await Student.find()
-    .populate('admissionSemester')
-    .populate({
-      path: 'academicDepartment',
-      populate: {
-        path: 'academicFaculty',
-      },
-    });
+const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
+  const queryObj = { ...query };
+
+  // const studentSerachableFields = ['email', 'name.firstName', 'presentAddress'];
+  // let searchTerm = '';
+  // if (query?.searchTerm) {
+  //   searchTerm = query?.searchTerm as string;
+  // }
+  // HOW OUR FORMAT SHOULD BE FOR PARTIAL MATCH  :
+  //{ email: { $regex : query.searchTerm , $options: i}}
+  // { presentAddress: { $regex : query.searchTerm , $options: i}}
+  //{ 'name.firstName': { $regex : query.searchTerm , $options: i}}
+
+  // WE ARE DYNAMICALLY DOING IT USING LOOP
+
+  // const searchQuery = Student.find({
+  //   $or: studentSerachableFields.map((field) => ({
+  //     [field]: { $regex: searchTerm, $options: 'i' },
+  //   })),
+  // });
+
+  // //Filtering
+
+  // const filterQuery = searchQuery
+  //   .find(queryObj)
+  //   .populate('admissionSemester')
+  //   .populate({
+  //     path: 'academicDepartment',
+  //     populate: {
+  //       path: 'academicFaculty',
+  //     },
+  //   });
+  // let sort = '-createdAt';
+  // if (query.sort) {
+  //   sort = query.sort as string;
+  // }
+  // const sortQuery = filterQuery.sort(sort);
+
+  // let limit = 1;
+  // let page = 1;
+  // let skip = 0;
+
+  // if (query.limit) {
+  //   limit = Number(query.limit);
+  // }
+
+  // if (query.page) {
+  //   page = Number(query.page);
+  //   skip = (page - 1) * limit;
+  // }
+
+  // let fields = '-__v';
+  // if(query.fields){
+  //   fields = (query.fields as string).split(',').join(' ')
+  // }
+  // const paginationQuery = sortQuery.skip(skip);
+  // const limitQuery = paginationQuery.limit(limit);
+  // const fieldQuery = await limitQuery.select(fields)
+  // return fieldQuery;
+
+  const studentQuery = new QueryBuilder(
+    Student.find() //   .populate('admissionSemester')
+      .populate({
+        path: 'academicDepartment',
+        populate: {
+          path: 'academicFaculty',
+        },
+      }),
+    query,
+  )
+    .search(studentSerachableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const result = await studentQuery.modelQuery;
   return result;
 };
 
@@ -48,9 +118,10 @@ const deleteStudentFromDB = async (id: string) => {
     await session.commitTransaction();
     await session.endSession();
     return deletedStudent;
-  } catch (err) {
+  } catch (err: any) {
     await session.abortTransaction();
     await session.endSession();
+    throw new Error(err);
   }
 };
 
