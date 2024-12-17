@@ -1,18 +1,78 @@
-import { NextFunction, Request, Response } from 'express';
-import httpStatus from 'http-status';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
+import { ErrorRequestHandler } from 'express';
+import { ZodError } from 'zod';
+import config from '../config';
+import AppError from '../errors/AppError';
+import handleCastError from '../errors/castError';
+import handleDuplicateError from '../errors/DuplicateError';
+import mongooseError from '../errors/mongooseError';
+import handleZodError from '../errors/ZodError';
+import { TErrorSource } from '../interface/error';
 
-const globalErrorHandler = (
-  err: any,
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  
+const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let message = err?.message || 'Something went wrong!';
-  res.status(err.statusCode || httpStatus.INTERNAL_SERVER_ERROR).json({
+  let statusCode = 500;
+  let errorSources: TErrorSource = [
+    {
+      path: '',
+      message: 'Something went wrong!',
+    },
+  ];
+
+  // this is zod error handler
+  if (err instanceof ZodError) {
+    const simplifiedError = handleZodError(err);
+    statusCode = simplifiedError?.statusCode;
+    message = simplifiedError?.message;
+    errorSources = simplifiedError?.errorSources;
+  }
+  // this is mongoose error handler
+  else if (err?.name === 'ValidationError') {
+    const simplifiedError = mongooseError(err);
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
+    errorSources = simplifiedError.errorSources;
+  }
+  // this is cast error
+  else if (err?.name === 'CastError') {
+    const simplifiedError = handleCastError(err);
+    statusCode = simplifiedError?.statusCode;
+    message = simplifiedError?.message;
+    errorSources = simplifiedError?.errorSources;
+  }
+  // this is duplicate error
+  else if (err?.code === 11000) {
+    const simplifiedError = handleDuplicateError(err);
+    statusCode = simplifiedError?.statusCode;
+    message = simplifiedError?.message;
+    errorSources = simplifiedError?.errorSources;
+  }
+  // this is app error
+  else if (err instanceof AppError) {
+    statusCode = err?.statusCode;
+    message = err?.message;
+    errorSources = [
+      {
+        path: '',
+        message: err?.message,
+      },
+    ];
+  } else if (err instanceof Error) {
+    message = err?.message;
+    errorSources = [
+      {
+        path: '',
+        message: err?.message,
+      },
+    ];
+  }
+  res.status(statusCode).json({
     success: false,
     message,
-    error: err,
+    errorSources,
+    err,
+    stack: config.NODE_ENV === 'development' ? err?.stack : 'null',
   });
 };
 
