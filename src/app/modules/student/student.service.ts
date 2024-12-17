@@ -151,7 +151,10 @@ const getupdateStudentFromDB = async (
       modifiedData[`localGuardian.${key}`] = value;
     }
   }
-  const result = await Student.findOneAndUpdate({ id }, payload, { new: true });
+  const result = await Student.findOneAndUpdate({ id }, modifiedData, {
+    new: true,
+    runValidators: true,
+  });
   return result;
 };
 
