@@ -1,6 +1,6 @@
 import { Model, Types } from 'mongoose';
 
-type TbloodGroup =
+export type TbloodGroup =
   | 'A+'
   | 'A-'
   | 'B+'
@@ -9,7 +9,7 @@ type TbloodGroup =
   | 'AB-'
   | 'O+'
   | 'O-';
-type TFacultyGender = 'male' | 'female' | 'other';
+export type TFacultyGender = 'male' | 'female' | 'other';
 export type TFacultyName = {
   firstName: string;
   middleName: string;

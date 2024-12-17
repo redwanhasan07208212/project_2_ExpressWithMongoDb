@@ -50,3 +50,10 @@ const updateFaculty = catchAsync(async (req, res, next) => {
     data: result,
   });
 });
+
+export const facultyController = {
+  getSingleFaculty,
+  getAllFaculty,
+  deleteFaculty,
+  updateFaculty,
+};
