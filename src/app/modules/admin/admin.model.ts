@@ -112,7 +112,7 @@ adminSchema.pre('aggregate', function (next) {
 
 //creating a custom static method
 adminSchema.statics.isUserExists = async function (id: string) {
-  const existingUser = await Faculty.findOne({ id });
+  const existingUser = await Admin.findOne({ id });
   return existingUser;
 };
-export const Faculty = model<TAdmin, AdminModel>('Faculty', adminSchema);
+export const Admin = model<TAdmin, AdminModel>('Admin', adminSchema);

@@ -17,12 +17,14 @@ const getAllFacultyFromDB = async (query: Record<string, unknown>) => {
     .paginate()
     .fields();
 
-  const result = facultyQuery.modelQuery;
+  const result = await facultyQuery.modelQuery;
   return result;
 };
 
 const getSingleFacultyFromDB = async (id: string) => {
+  console.log(id);
   const result = await Faculty.findById(id);
+  console.log(result);
   return result;
 };
 const deleteFacultyFromDB = async (id: string) => {
