@@ -45,7 +45,7 @@ const deleteCourse = catchAsync(async (req, res, next) => {
   });
 });
 
-export const facultyController = {
+export const CourseController = {
   createCourse,
   getSingleCourse,
   getAllCourse,
