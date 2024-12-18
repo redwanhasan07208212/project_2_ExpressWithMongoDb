@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+import { BloodGroup, Gender } from './faculty.constant';
 import { FacultyModel, TFaculty, TFacultyName } from './faculty.interface';
 
 const facultyNameSchema = new Schema<TFacultyName>({
@@ -39,8 +40,8 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
     gender: {
       type: String,
       enum: {
-        values: ['male', 'female', 'other'],
-        message: '{VALUE} is not a valid Gender',
+        values: Gender,
+        message: '{VALUE} is not a valid gender',
       },
       required: [true, 'Gender is Required'],
     },
@@ -61,9 +62,10 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
       required: [true, 'Emergency Contact no is Required'],
     },
     bloodGroup: {
+      type: String,
       enum: {
-        values: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
-        message: '{VALUE} is not in this blood Group',
+        values: BloodGroup,
+        message: '{VALUE} is not a valid blood group',
       },
       required: [true, 'Blood Group is Required'],
     },
