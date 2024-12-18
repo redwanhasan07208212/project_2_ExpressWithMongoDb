@@ -1,8 +1,12 @@
+import { boolean } from 'joi';
 import { model, Schema } from 'mongoose';
 import { TCourse, TPrequisiteCourses } from './course.interface';
 
 const preRequisiteCourseSchema = new Schema<TPrequisiteCourses>({
-  course: Schema.Types.ObjectId,
+  course: {
+    type: Schema.Types.ObjectId,
+    ref: 'Course',
+  },
   isDeleted: {
     type: Boolean,
     default: false,
@@ -31,6 +35,10 @@ const courseSchema = new Schema<TCourse>({
     required: true,
   },
   preRequisiteCourses: [preRequisiteCourseSchema],
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 export const Course = model<TCourse>('Course', courseSchema);
