@@ -65,7 +65,7 @@ const createStudentIntoDb = async (password: string, payload: TStudent) => {
   } catch (err: any) {
     await session.abortTransaction();
     await session.endSession();
-    throw new Error(err);
+    throw err;
   }
 };
 const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
@@ -75,7 +75,7 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   //if password is not given , use deafult password
   userData.password = password || (config.DATABASE_PASSWORD as string);
 
-  //set student role
+  //set faculty role
   userData.role = 'faculty';
 
   // find academic department info
@@ -120,7 +120,7 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   } catch (err: any) {
     await session.abortTransaction();
     await session.endSession();
-    throw new Error(err);
+    throw err;
   }
 };
 
@@ -166,7 +166,7 @@ const createAdminIntoDB = async (password: string, payload: TFaculty) => {
   } catch (err: any) {
     await session.abortTransaction();
     await session.endSession();
-    throw new Error(err);
+    throw err;
   }
 };
 

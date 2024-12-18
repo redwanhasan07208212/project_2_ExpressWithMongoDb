@@ -2,9 +2,9 @@ import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import QueryBuilder from '../../builder/queryBuilder';
 import AppError from '../../errors/AppError';
+import { facultySearchFields } from './faculty.constant';
 import { TFaculty } from './faculty.interface';
 import { Faculty } from './faculty.model';
-import { facultySearchFields } from './faculty.constant';
 
 const getAllFacultyFromDB = async (query: Record<string, unknown>) => {
   const facultyQuery = new QueryBuilder(
@@ -22,8 +22,10 @@ const getAllFacultyFromDB = async (query: Record<string, unknown>) => {
 };
 
 const getSingleFacultyFromDB = async (id: string) => {
-  console.log(id);
-  const result = await Faculty.findById(id);
+  console.log('from service', id);
+  const result = await Faculty.findOne({
+    id
+  });
   console.log(result);
   return result;
 };

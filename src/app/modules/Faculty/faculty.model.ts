@@ -86,7 +86,7 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
     },
     isDeleted: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   {
@@ -98,7 +98,7 @@ facultySchema.virtual('fullName').get(function () {
   return this?.name?.firstName + this?.name?.middleName + this?.name?.lastName;
 });
 
-// query middleware
+//query middleware
 facultySchema.pre('find', function (next) {
   this.find({ isDeleted: { $ne: true } });
   next();
