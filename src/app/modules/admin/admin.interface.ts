@@ -15,7 +15,7 @@ export type TAdminName = {
   middleName: string;
   lastName: string;
 };
-export type TFaculty = {
+export type TAdmin = {
   id: string;
   user: Types.ObjectId;
   designation: string;
@@ -32,6 +32,6 @@ export type TFaculty = {
   isDeleted: boolean;
 };
 
-export interface AdminModel extends Model<TFaculty> {
-  isUserExits(id: string): Promise<TFaculty | null>;
+export interface AdminModel extends Model<TAdmin> {
+  isUserExits(id: string): Promise<TAdmin | null>;
 }
