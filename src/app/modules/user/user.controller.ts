@@ -10,7 +10,7 @@ const createStudent = catchAsync(async (req, res, next) => {
 
   const result = await userServices.createStudentIntoDb(password, studentData);
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: httpStatus.CREATED,
     success: true,
     message: 'Student is created successfully',
     data: result,
@@ -22,7 +22,7 @@ const createFaculty = catchAsync(async (req, res) => {
   const result = await userServices.createFacultyIntoDB(password, facultyData);
 
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: httpStatus.CREATED,
     success: true,
     message: 'Faculty is created succesfully',
     data: result,
@@ -35,7 +35,7 @@ const createAdmin = catchAsync(async (req, res) => {
   const result = await userServices.createAdminIntoDB(password, adminData);
 
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: httpStatus.CREATED,
     success: true,
     message: 'Admin is created succesfully',
     data: result,
