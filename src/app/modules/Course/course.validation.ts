@@ -34,7 +34,14 @@ const updateCourseValidationSchema = z.object({
 });
 //const updateCourseValidationSchema = createCourseValidationSchema.partial(); we can not use that because in the partial it will be optional but all the type will be required
 
+const facultiesWithCourseValidationSchema = z.object({
+  body: z.object({
+    faculties: z.array(z.string()),
+  }),
+});
+
 export const CourseValidations = {
   createCourseValidationSchema,
   updateCourseValidationSchema,
+  facultiesWithCourseValidationSchema,
 };

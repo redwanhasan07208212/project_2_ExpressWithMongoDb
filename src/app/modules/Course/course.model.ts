@@ -1,6 +1,9 @@
-import { boolean } from 'joi';
 import { model, Schema } from 'mongoose';
-import { TCourse, TPrequisiteCourses } from './course.interface';
+import {
+  TCourse,
+  TCourseFaculty,
+  TPrequisiteCourses,
+} from './course.interface';
 
 const preRequisiteCourseSchema = new Schema<TPrequisiteCourses>({
   course: {
@@ -42,3 +45,22 @@ const courseSchema = new Schema<TCourse>({
 });
 
 export const Course = model<TCourse>('Course', courseSchema);
+
+const CourseFacultySchema = new Schema<TCourseFaculty>({
+  course: {
+    type: Schema.Types.ObjectId,
+    ref: 'Course',
+    unique: true,
+  },
+  faculties: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Faculty',
+    },
+  ],
+});
+
+export const CourseFaculty = model<TCourseFaculty>(
+  'CourseFaculty',
+  CourseFacultySchema,
+);
