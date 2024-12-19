@@ -18,9 +18,9 @@ router.post(
   UserControllers.createFaculty,
 );
 router.post(
-  '/create-faculty',
+  '/create-admin',
   validateRequest(AdminValidations.createAdminValidationSchema),
-  UserControllers.createFaculty,
+  UserControllers.createAdmin,
 );
 
 export const userRoutes = router;

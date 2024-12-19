@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose';
-import { AdminModel, TAdmin, TAdminName } from './admin.interface';
 import { BloodGroup, Gender } from './admin.constant';
+import { AdminModel, TAdmin, TAdminName } from './admin.interface';
 
 const adminNameSchema = new Schema<TAdminName>({
   firstName: {
@@ -82,7 +82,7 @@ const adminSchema = new Schema<TAdmin, AdminModel>(
     },
     isDeleted: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   {
