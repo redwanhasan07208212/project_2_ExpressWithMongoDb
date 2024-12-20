@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import { AnyZodObject, ZodEffects } from 'zod';
+import catchAsync from '../utils/catchAsync';
 
-const validateRequest =
-  (schema: AnyZodObject | ZodEffects<AnyZodObject>) =>
-  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
+const validateRequest = (schema: AnyZodObject | ZodEffects<AnyZodObject>) =>
+  catchAsync(
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
       await schema.parseAsync({
         body: req.body,
         query: req.query,
@@ -12,9 +12,7 @@ const validateRequest =
         cookies: req.cookies,
       });
       return next();
-    } catch (error) {
-      next(error);
-    }
-  };
+    },
+  );
 
 export default validateRequest;
