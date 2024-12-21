@@ -4,7 +4,7 @@ import sendResponse from '../../utils/sendResponse';
 import { facultyServices } from './faculty.service';
 
 const getSingleFaculty = catchAsync(async (req, res, next) => {
-  const  id  = req.params.id;
+  const id = req.params.id;
   console.log(id);
   const result = await facultyServices.getSingleFacultyFromDB(id);
   sendResponse(res, {
@@ -15,6 +15,7 @@ const getSingleFaculty = catchAsync(async (req, res, next) => {
   });
 });
 const getAllFaculty = catchAsync(async (req, res, next) => {
+  console.log(req.cookies);
   const result = await facultyServices.getAllFacultyFromDB(req.query);
 
   sendResponse(res, {

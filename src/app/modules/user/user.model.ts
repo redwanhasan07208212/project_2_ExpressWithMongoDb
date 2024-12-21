@@ -12,6 +12,10 @@ const userSchema = new Schema<Tuser, UserModel>(
     password: {
       type: String,
       required: true,
+      select: 0,
+    },
+    passwordChangeAt: {
+      type: Date,
     },
     needPasswordChange: {
       type: Boolean,
@@ -56,7 +60,7 @@ userSchema.post('save', function (doc, next) {
 });
 
 userSchema.statics.isUserExitsByCustomId = async function (id: string) {
-  return await User.findOne({ id });
+  return await User.findOne({ id }).select('+password');
 };
 
 userSchema.statics.isPasswordMatched = async function (
@@ -64,6 +68,18 @@ userSchema.statics.isPasswordMatched = async function (
   hasedPassword,
 ) {
   return await bcrypt.compare(plainTextPassword, hasedPassword);
+};
+
+userSchema.statics.isJWTIssuedBeforePasswordChange = function (
+  passwordChangedTimeStamps: Date,
+  jwtIssuedTimeStamps: number,
+) {
+  const passwordChangedTime =
+    new Date(passwordChangedTimeStamps).getTime() / 1000;
+
+  console.log(passwordChangedTime, jwtIssuedTimeStamps);
+
+  return passwordChangedTime > jwtIssuedTimeStamps;
 };
 
 export const User = model<Tuser, UserModel>('User', userSchema);
